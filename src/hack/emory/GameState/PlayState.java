@@ -73,7 +73,7 @@ public class PlayState extends GameState
 	@Override
 	public void render(Graphics2D g)
 	{
-		g.drawImage(Content.getImage(Content.MENU_BACKGROUND), 0, 0, null);
+		g.drawImage(Content.getImage(Content.LEVEL_BACKGROUND), 0, 0, null);
 		
 		// Render entities
 		for(Entity entity : entities)
