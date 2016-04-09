@@ -21,8 +21,8 @@ public class Player extends Entity
 	public static final int WIDTH = 128;
 	public static final int HEIGHT = 128;
 	
-	public static final double MAX_SPEED = 8;
-	public static final double ACCELERATION = 2.5;
+	public static final double MAX_SPEED = 4;
+	public static final double ACCELERATION = 2;
 	
 	public static final int BASE_HEALTH = 100;
 	
@@ -37,6 +37,23 @@ public class Player extends Entity
 	public void update()
 	{
 		super.update();
+		if (velY == 0 && velX ==0) {
+			switch(direction)
+			{
+				case UP:
+					setAnimation(IDLE_UP, Content.getAnimation(Content.PLAYER_IDLE_UP), 10);
+					break;
+				case DOWN:
+					setAnimation(IDLE_DOWN, Content.getAnimation(Content.PLAYER_IDLE_DOWN), 10);
+					break;
+				case LEFT:
+					setAnimation(IDLE_LEFT, Content.getAnimation(Content.PLAYER_IDLE_LEFT), 10);
+					break;
+				case RIGHT:
+					setAnimation(IDLE_RIGHT, Content.getAnimation(Content.PLAYER_IDLE_RIGHT), 10);
+					break;
+			}
+		}
 	}
 	
 	public void render(Graphics2D g)

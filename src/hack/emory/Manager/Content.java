@@ -35,6 +35,11 @@ public class Content
 	public static AnimationData PLAYER_MOVE_LEFT = new AnimationData("/images/sprites/player/move_left.png", 128, 128, 4);
 	public static AnimationData PLAYER_MOVE_RIGHT = new AnimationData("/images/sprites/player/move_right.png", 128, 128, 4);
 
+	public static AnimationData PLAYER_IDLE_UP = new AnimationData("/images/sprites/player/idle_up.png", 128, 128, 2);
+	public static AnimationData PLAYER_IDLE_DOWN = new AnimationData("/images/sprites/player/idle_down.png", 128, 128, 2);
+	public static AnimationData PLAYER_IDLE_LEFT = new AnimationData("/images/sprites/player/idle_left.png", 128, 128, 2);
+	public static AnimationData PLAYER_IDLE_RIGHT = new AnimationData("/images/sprites/player/idle_right.png", 128, 128, 2);
+	
 	// Storage
 	private static HashMap<ImageData, BufferedImage> imageMap;
 	private static HashMap<AnimationData, BufferedImage[]> animationMap;
