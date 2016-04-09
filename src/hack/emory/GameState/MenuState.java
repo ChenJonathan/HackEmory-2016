@@ -62,11 +62,11 @@ public class MenuState extends GameState {
 			// do credits
 		} else { // in the menu
 			if (Input.instance.mouseLeftRelease()) { // onclick
-				if (Input.instance.mouseInRect(355, 766, 552 - 355, 840 - 766)) {
+				if (Input.instance.mouseInRect(153, 822, 484 - 153, 888 - 822)) {
 					gsm.setState(GameStateManager.PLAY);
-				} else if (Input.instance.mouseInRect(861, 765, 1119 - 861, 837 - 765)) {
+				} else if (Input.instance.mouseInRect(742, 822, 1176 - 742, 880 - 822)) {
 					credits = true;
-				} else if (Input.instance.mouseInRect(1440, 766, 1575 - 1440, 841 - 766)) {
+				} else if (Input.instance.mouseInRect(1479, 819, 1710 - 1479, 877 - 819)) {
 					System.exit(0);
 				}
 			}
