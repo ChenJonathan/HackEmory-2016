@@ -84,26 +84,28 @@ public class PlayState extends GameState
 		}
 		
 		// HUD
-		g.setColor(Color.WHITE);
-		g.drawRect(MAP_X - MAP_LENGTH / 2, MAP_Y - MAP_LENGTH / 2, MAP_LENGTH, MAP_LENGTH);
-		for(int x = -2; x < 3; x++)
-		{
-			for(int y = -2; y < 3; y++)
+		if (Input.instance.keyDown(Input.SHIFT)){
+			g.setColor(Color.WHITE);
+			g.drawRect(MAP_X - MAP_LENGTH / 2, MAP_Y - MAP_LENGTH / 2, MAP_LENGTH, MAP_LENGTH);
+			for(int x = -2; x < 3; x++)
 			{
-				if(roomX + x < 0 || roomX + x >= Floor.WIDTH || roomY + y < 0 || roomY + y >= Floor.HEIGHT)
+				for(int y = -2; y < 3; y++)
 				{
-					continue;
-				}
-				
-				Room room = floor.getRoom(roomX + x, roomY + y);
-				if(room != null)
-				{
-					g.drawRect(MAP_X + x * ROOM_TOTAL_LENGTH - ROOM_LENGTH / 2,
-							   MAP_Y + y * ROOM_TOTAL_LENGTH - ROOM_LENGTH / 2,
-							   ROOM_LENGTH, ROOM_LENGTH);
-					if(room.getDoor(Entity.Direction.UP))
+					if(roomX + x < 0 || roomX + x >= Floor.WIDTH || roomY + y < 0 || roomY + y >= Floor.HEIGHT)
 					{
-						// g.drawRect(Game.WIDTH / 2, Game.HEIGHT / 2, 10, MAP_LENGTH);
+						continue;
+					}
+					
+					Room room = floor.getRoom(roomX + x, roomY + y);
+					if(room != null)
+					{
+						g.drawRect(MAP_X + x * ROOM_TOTAL_LENGTH - ROOM_LENGTH / 2,
+								   MAP_Y + y * ROOM_TOTAL_LENGTH - ROOM_LENGTH / 2,
+								   ROOM_LENGTH, ROOM_LENGTH);
+						if(room.getDoor(Entity.Direction.UP))
+						{
+							// g.drawRect(Game.WIDTH / 2, Game.HEIGHT / 2, 10, MAP_LENGTH);
+						}
 					}
 				}
 			}
