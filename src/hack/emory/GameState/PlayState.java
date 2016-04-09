@@ -19,6 +19,8 @@ public class PlayState extends GameState
 {
 	private int time;
 	
+	int roomX;
+	int roomY;
 	private Floor floor;
 	
 	private Player player;
@@ -38,9 +40,9 @@ public class PlayState extends GameState
 		super(gsm);
 
 		// Initialize stage
-		System.out.println("Test1");
 		floor = new Floor();
-		System.out.println("Test2");
+		roomX = (int) floor.getStart().getX();
+		roomY = (int) floor.getStart().getY();
 		player = new Player(this, Game.WIDTH / 2, Game.HEIGHT / 2, Player.BASE_HEALTH);
 		entities = new ArrayList<Entity>();
 		entities.add(player);
@@ -110,7 +112,8 @@ public class PlayState extends GameState
 			switch(player.getDirection())
 			{
 				case UP:
-					if(player.getX() > Game.WIDTH / 2 - DOOR_LENGTH / 2
+					if(floor.getRoom(roomX, roomY).getDoor(Entity.Direction.UP) 
+							&& player.getX() > Game.WIDTH / 2 - DOOR_LENGTH / 2
 							&& player.getX() < Game.WIDTH / 2 + DOOR_LENGTH / 2
 							&& player.getY() == player.getHeight() / 2)
 					{
@@ -118,7 +121,8 @@ public class PlayState extends GameState
 					}
 					break;
 				case DOWN:
-					if(player.getX() > Game.WIDTH / 2 - DOOR_LENGTH / 2
+					if(floor.getRoom(roomX, roomY).getDoor(Entity.Direction.DOWN) 
+							&& player.getX() > Game.WIDTH / 2 - DOOR_LENGTH / 2
 							&& player.getX() < Game.WIDTH / 2 + DOOR_LENGTH / 2
 							&& player.getY() == Game.HEIGHT - player.getHeight() / 2)
 					{
@@ -126,7 +130,8 @@ public class PlayState extends GameState
 					}
 					break;
 				case LEFT:
-					if(player.getY() > Game.HEIGHT / 2 - DOOR_LENGTH / 2
+					if(floor.getRoom(roomX, roomY).getDoor(Entity.Direction.LEFT) 
+							&& player.getY() > Game.HEIGHT / 2 - DOOR_LENGTH / 2
 							&& player.getY() < Game.HEIGHT / 2 + DOOR_LENGTH / 2
 							&& player.getX() == player.getWidth() / 2)
 					{
@@ -134,7 +139,8 @@ public class PlayState extends GameState
 					}
 					break;
 				case RIGHT:
-					if(player.getY() > Game.HEIGHT / 2 - DOOR_LENGTH / 2
+					if(floor.getRoom(roomX, roomY).getDoor(Entity.Direction.RIGHT) 
+							&& player.getY() > Game.HEIGHT / 2 - DOOR_LENGTH / 2
 							&& player.getY() < Game.HEIGHT / 2 + DOOR_LENGTH / 2
 							&& player.getX() == Game.WIDTH - player.getWidth() / 2)
 					{

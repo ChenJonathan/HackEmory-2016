@@ -1,8 +1,11 @@
 package hack.emory.Floor;
 
+import hack.emory.Entity.Entity.Direction;
+
 import java.awt.geom.Point2D;
 
-public class Room {
+public class Room
+{
 	private int id;
 	private boolean[] doors;
 	
@@ -26,6 +29,23 @@ public class Room {
 		for(int i = 0; i < 4; i ++)
 		{
 			doors[i] = doors[i] || newDoors[i];
+		}
+	}
+	
+	public boolean getDoor(Direction direction)
+	{
+		switch(direction)
+		{
+			case UP:
+				return doors[0];
+			case LEFT:
+				return doors[1];
+			case DOWN:
+				return doors[2];
+			case RIGHT:
+				return doors[3];
+			default:
+				return false;
 		}
 	}
 	
