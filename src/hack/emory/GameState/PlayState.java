@@ -2,6 +2,7 @@ package hack.emory.GameState;
 
 import hack.emory.Entity.Entity;
 import hack.emory.Entity.Player;
+import hack.emory.Floor.Floor;
 import hack.emory.Main.Game;
 import hack.emory.Manager.Content;
 import hack.emory.Manager.GameStateManager;
@@ -18,8 +19,12 @@ public class PlayState extends GameState
 {
 	private int time;
 	
+	private Floor floor;
+	
 	private Player player;
 	private ArrayList<Entity> entities;
+	
+	public static final int DOOR_LENGTH = 150;
 	
 	public static final double FRICTION = 1;
 
@@ -32,7 +37,10 @@ public class PlayState extends GameState
 	{
 		super(gsm);
 
-		// Initialize stage TODO
+		// Initialize stage
+		System.out.println("Test1");
+		floor = new Floor();
+		System.out.println("Test2");
 		player = new Player(this, Game.WIDTH / 2, Game.HEIGHT / 2, Player.BASE_HEALTH);
 		entities = new ArrayList<Entity>();
 		entities.add(player);
@@ -56,7 +64,7 @@ public class PlayState extends GameState
 			
 			// Wall collisions
 			entity.setX(Math.min(Math.max(entity.getX(), entity.getWidth() / 2), Game.WIDTH - entity.getWidth() / 2));
-			entity.setY(Math.min(Math.max(entity.getY(), entity.getWidth() / 2), Game.HEIGHT - entity.getWidth() / 2));
+			entity.setY(Math.min(Math.max(entity.getY(), entity.getHeight() / 2), Game.HEIGHT - entity.getHeight() / 2));
 		}
 	}
 
@@ -94,6 +102,46 @@ public class PlayState extends GameState
 		if(Input.instance.keyDown(Input.S))
 		{
 			player.move(Entity.Direction.DOWN);
+		}
+		
+		// Action
+		if(Input.instance.keyPress(Input.SPACE))
+		{
+			switch(player.getDirection())
+			{
+				case UP:
+					if(player.getX() > Game.WIDTH / 2 - DOOR_LENGTH / 2
+							&& player.getX() < Game.WIDTH / 2 + DOOR_LENGTH / 2
+							&& player.getY() == player.getHeight() / 2)
+					{
+						player.setY(Game.HEIGHT - player.getHeight() / 2);
+					}
+					break;
+				case DOWN:
+					if(player.getX() > Game.WIDTH / 2 - DOOR_LENGTH / 2
+							&& player.getX() < Game.WIDTH / 2 + DOOR_LENGTH / 2
+							&& player.getY() == Game.HEIGHT - player.getHeight() / 2)
+					{
+						player.setY(player.getHeight() / 2);
+					}
+					break;
+				case LEFT:
+					if(player.getY() > Game.HEIGHT / 2 - DOOR_LENGTH / 2
+							&& player.getY() < Game.HEIGHT / 2 + DOOR_LENGTH / 2
+							&& player.getX() == player.getWidth() / 2)
+					{
+						player.setX(Game.WIDTH - player.getWidth() / 2);
+					}
+					break;
+				case RIGHT:
+					if(player.getY() > Game.HEIGHT / 2 - DOOR_LENGTH / 2
+							&& player.getY() < Game.HEIGHT / 2 + DOOR_LENGTH / 2
+							&& player.getX() == Game.WIDTH - player.getWidth() / 2)
+					{
+						player.setX(player.getWidth() / 2);
+					}
+					break;
+			}
 		}
 	}
 

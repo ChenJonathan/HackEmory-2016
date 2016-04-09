@@ -112,4 +112,9 @@ public abstract class Entity
 	{
 		return height;
 	}
+	
+	public Direction getDirection()
+	{
+		return direction;
+	}
 }
