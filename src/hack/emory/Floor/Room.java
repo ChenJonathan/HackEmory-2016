@@ -22,6 +22,14 @@ public class Room
 		doors = new boolean[4];
 	}
 	
+	public Room(boolean[] initDoors)
+	{
+		id = idCounter;
+		idCounter++;
+		discovered = false;
+		doors = initDoors;
+	}
+	
 	public void addDoors(boolean[] newDoors)
 	{
 		for(int i = 0; i < 4; i ++)

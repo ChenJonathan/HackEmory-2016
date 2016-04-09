@@ -1,6 +1,7 @@
 package hack.emory.Floor;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class Floor
 {
@@ -12,24 +13,36 @@ public class Floor
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 5;
 	
-	public Floor()
+	//Start is random
+	public static Floor randomFloor()
 	{
-		rooms = new Room[HEIGHT][WIDTH];
-		start = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
-		while(end == null || end.equals(start))
+		Floor floor = new Floor();
+		floor.start = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
+		while(floor.end == null || floor.end.equals(floor.start))
 		{
-			end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
+			floor.end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
 		}
-		
-		generateRooms();
+		return floor;
 	}
 	
-	public Floor(Point2D start, Point2D end)
+	//Start is in the center(3,3)
+	public static Floor centerFloor()
+	{
+		Floor floor = new Floor();
+		floor.start = new Point2D.Double(3,3);
+		return floor;
+	}
+	//Start is set to the Point2D param
+	public static Floor specificFloor(Point2D start)
+	{
+		Floor floor = new Floor();
+		floor.start = start;
+		return floor;
+	}
+	
+	private Floor()
 	{
 		rooms = new Room[HEIGHT][WIDTH];
-		this.start = start;
-		this.end = end;
-		
 		generateRooms();
 	}
 	
@@ -47,7 +60,7 @@ public class Floor
 	{
 		return end;
 	}
-	
+	/*
 	public void generateRooms()
 	{
 		int currentX = (int) start.getX();
@@ -77,5 +90,192 @@ public class Floor
 			currentX = (int)neighbors[min].getX();
 			currentY = (int)neighbors[min].getY();
 		}
+	}*/
+	
+	public void generateRooms(){
+		rooms[(int) start.getX()][(int) start.getY()] = new Room();
+		ArrayList<Point2D> firstGen = new ArrayList<Point2D>();
+		ArrayList<Point2D> secondGen = new ArrayList<Point2D>();
+		ArrayList<Point2D> thirdGen = new ArrayList<Point2D>();
+		ArrayList<Point2D> fourthGen = new ArrayList<Point2D>();
+		ArrayList<Point2D> fifthGen = new ArrayList<Point2D>();
+		ArrayList<Point2D> sixthGen = new ArrayList<Point2D>();
+		firstGen.add(makeNorth(start));
+		firstGen.add(makeEast(start));
+		firstGen.add(makeSouth(start));
+		firstGen.add(makeWest(start));
+		for(int i = 0; i < firstGen.size(); i++){
+			int r1 = (int)(Math.random() * 4);
+			switch(r1){
+				case 0: 
+					secondGen.add(makeNorth(firstGen.get(i)));
+					break;
+				case 1: 
+					secondGen.add(makeEast(firstGen.get(i)));
+					break;
+				case 2: 
+					secondGen.add(makeSouth(firstGen.get(i)));
+					break;
+				case 3: 
+					secondGen.add(makeWest(firstGen.get(i)));
+					break;
+			}
+			for(int j = 0; j < secondGen.size(); j++){
+				int r2 = (int)(Math.random() * 4);
+				switch(r2){
+					case 0: 
+						thirdGen.add(makeNorth(secondGen.get(j)));
+						break;
+					case 1: 
+						thirdGen.add(makeEast(secondGen.get(j)));
+						break;
+					case 2: 
+						thirdGen.add(makeSouth(secondGen.get(j)));
+						break;
+					case 3: 
+						thirdGen.add(makeWest(secondGen.get(j)));
+						break;
+				}
+				for(int k = 0; k < thirdGen.size(); k++){
+					int r3 = (int)(Math.random() * 4);
+					switch(r3){
+						case 0: 
+							fourthGen.add(makeNorth(thirdGen.get(k)));
+							break;
+						case 1: 
+							fourthGen.add(makeEast(thirdGen.get(k)));
+							break;
+						case 2: 
+							fourthGen.add(makeSouth(thirdGen.get(k)));
+							break;
+						case 3: 
+							fourthGen.add(makeWest(thirdGen.get(k)));
+							break;
+					}
+					for(int l = 0; l < fourthGen.size(); l++){
+						for(int m = 0; m < 2; m++){
+							int r4 = (int)(Math.random() * 4);
+							switch(r4){
+								case 0: 
+									fifthGen.add(makeNorth(fourthGen.get(l+m)));
+									break;
+								case 1: 
+									fifthGen.add(makeEast(fourthGen.get(l+m)));
+									break;
+								case 2: 
+									fifthGen.add(makeSouth(fourthGen.get(l+m)));
+									break;
+								case 3: 
+									fifthGen.add(makeWest(fourthGen.get(l+m)));
+									break;
+							}
+							for(int n = 0; n < fifthGen.size(); n++){
+								for(int o = 0; o < 2; o++){
+									int r5 = (int)(Math.random() * 4);
+									switch(r5){
+										case 0: 
+											sixthGen.add(makeNorth(fifthGen.get(n+o)));
+											break;
+										case 1: 
+											sixthGen.add(makeEast(fifthGen.get(n+o)));
+											break;
+										case 2: 
+											sixthGen.add(makeSouth(fifthGen.get(n+o)));
+											break;
+										case 3: 
+											sixthGen.add(makeWest(fifthGen.get(n+o)));
+											break;
+									}
+									for(int p = 0; p < sixthGen.size(); p++){
+										int r6 = (int)(Math.random() * 4);
+										switch(r6){
+											case 0: 
+												makeNorth(sixthGen.get(p));
+												break;
+											case 1: 
+												makeEast(sixthGen.get(p));
+												break;
+											case 2: 
+												makeSouth(sixthGen.get(p));
+												break;
+											case 3: 
+												makeWest(sixthGen.get(p));
+												break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	public Point2D makeNorth(Point2D curRoom)
+	{
+		int x = (int)curRoom.getX();
+		int y = (int)curRoom.getY();
+		boolean[] initDoors = new boolean[]{false, false, true, false};
+		if(rooms[x][y-1] == null){
+			rooms[x][y-1] = new Room(initDoors);
+		}
+		else
+		{
+			rooms[x][y-1].addDoors(initDoors);
+		}
+		rooms[x][y].addDoors(new boolean[]{true, false, false, false});
+		return new Point2D.Double(x, y-1);
+	}
+	
+	public Point2D makeEast(Point2D curRoom)
+	{
+		int x = (int)curRoom.getX();
+		int y = (int)curRoom.getY();
+		boolean[] initDoors = new boolean[]{false, false, false, true};
+		if(rooms[x+1][y] == null)
+		{
+		rooms[x+1][y] = new Room(initDoors);
+		}
+		else
+		{
+			rooms[x+1][y].addDoors(initDoors);
+		}
+		rooms[x][y].addDoors(new boolean[]{false, true, false, false});
+		return new Point2D.Double(x+1,y);
+	}
+	
+	public Point2D makeSouth(Point2D curRoom)
+	{
+		int x = (int)curRoom.getX();
+		int y = (int)curRoom.getY();
+		boolean[] initDoors = new boolean[]{true, false, false, false};
+		if(rooms[x][y+1] == null)
+		{
+			rooms[x][y+1] = new Room(initDoors);
+		}
+		else
+		{
+			rooms[x][y+1].addDoors(initDoors);
+		}
+		rooms[x][y].addDoors(new boolean[]{false, false, true, false});
+		return new Point2D.Double(x, y+1);
+	}
+	
+	public Point2D makeWest(Point2D curRoom)
+	{
+		int x = (int)curRoom.getX();
+		int y = (int)curRoom.getY();
+		boolean[] initDoors = new boolean[]{false, true, false, false};
+		if(rooms[x-1][y] == null)
+		{
+			rooms[x-1][y] = new Room(initDoors);
+		}
+		else
+		{
+			rooms[x-1][y].addDoors(initDoors);
+		}
+		rooms[x][y].addDoors(new boolean[]{false, false, false, true});
+		return new Point2D.Double(x-1,y);
 	}
 }
