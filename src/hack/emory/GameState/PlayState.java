@@ -42,7 +42,7 @@ public class PlayState extends GameState
 		super(gsm);
 
 		// Initialize stage
-		floor = new Floor();
+		floor = new Floor(false);
 		roomX = (int) floor.getStart().getX();
 		roomY = (int) floor.getStart().getY();
 		player = new Player(this, Game.WIDTH / 2, Game.HEIGHT / 2, Player.BASE_HEALTH);
