@@ -27,8 +27,8 @@ public class PlayState extends GameState
 	private ArrayList<Entity> entities;
 	
 	public static final int DOOR_LENGTH = 150;
-	
-	public static final double FRICTION = 1;
+
+	public static final double FRICTION = 0.5;
 
 	/**
 	 * Sets up the play state and initializes stage, stage objects, phases, display, and timer.

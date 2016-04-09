@@ -61,10 +61,10 @@ public class Floor
 			neighbors[2] = new Point2D.Double(currentX, currentY + 1);
 			neighbors[3] = new Point2D.Double(currentX - 1, currentY);
 			double[] distance = new double[4];
-			distance[0] = Math.abs(neighbors[1].distance(end));
-			distance[1] = Math.abs(neighbors[2].distance(end));
-			distance[2] = Math.abs(neighbors[3].distance(end));
-			distance[3] = Math.abs(neighbors[4].distance(end));
+			distance[0] = Math.abs(neighbors[0].distance(end));
+			distance[1] = Math.abs(neighbors[1].distance(end));
+			distance[2] = Math.abs(neighbors[2].distance(end));
+			distance[3] = Math.abs(neighbors[3].distance(end));
 			int min = 0;
 			for(int i = 1; i < 3; i ++)
 			{
