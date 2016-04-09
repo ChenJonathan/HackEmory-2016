@@ -3,18 +3,16 @@ package hack.emory.GameState;
 import hack.emory.Entity.Entity;
 import hack.emory.Entity.Player;
 import hack.emory.Floor.Floor;
+import hack.emory.Floor.Room;
 import hack.emory.Main.Game;
 import hack.emory.Manager.Content;
 import hack.emory.Manager.GameStateManager;
 import hack.emory.Manager.Input;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
-/**
- * The state where the player is actively playing the game. Handles Manager.inputs (skill use) and sends the info to the
- * HUD, Stage, and Phase objects.
- */
 public class PlayState extends GameState
 {
 	private int time;
@@ -27,14 +25,18 @@ public class PlayState extends GameState
 	private ArrayList<Entity> entities;
 	
 	public static final int DOOR_LENGTH = 150;
+	
+	public static final int ROOM_LENGTH = 80;
+	public static final int ROOM_PADDING = 10;
+	public static final int ROOM_TOTAL_LENGTH = ROOM_LENGTH + ROOM_PADDING * 2;
+	public static final int NUM_ROOMS = 5;
+
+	public static final int MAP_X = Game.WIDTH / 2;
+	public static final int MAP_Y = Game.HEIGHT / 2;
+	public static final int MAP_LENGTH = ROOM_TOTAL_LENGTH *NUM_ROOMS;
 
 	public static final double FRICTION = 0.5;
 
-	/**
-	 * Sets up the play state and initializes stage, stage objects, phases, display, and timer.
-	 * 
-	 * @param gsm The game state manager.
-	 */
 	public PlayState(GameStateManager gsm)
 	{
 		super(gsm);
@@ -80,12 +82,34 @@ public class PlayState extends GameState
 		{
 			entity.render(g);
 		}
+		
+		// HUD
+		g.setColor(Color.WHITE);
+		g.drawRect(MAP_X - MAP_LENGTH / 2, MAP_Y - MAP_LENGTH / 2, MAP_LENGTH, MAP_LENGTH);
+		for(int x = -2; x < 3; x++)
+		{
+			for(int y = -2; y < 3; y++)
+			{
+				if(roomX + x < 0 || roomX + x >= Floor.WIDTH || roomY + y < 0 || roomY + y >= Floor.HEIGHT)
+				{
+					continue;
+				}
+				
+				Room room = floor.getRoom(roomX + x, roomY + y);
+				if(room != null)
+				{
+					g.drawRect(MAP_X + x * ROOM_TOTAL_LENGTH - ROOM_LENGTH / 2,
+							   MAP_Y + y * ROOM_TOTAL_LENGTH - ROOM_LENGTH / 2,
+							   ROOM_LENGTH, ROOM_LENGTH);
+					if(room.getDoor(Entity.Direction.UP))
+					{
+						// g.drawRect(Game.WIDTH / 2, Game.HEIGHT / 2, 10, MAP_LENGTH);
+					}
+				}
+			}
+		}
 	}
 
-	/**
-	 * Handles all of the player Manager.input during play. Relays skillcasting information to both stage and HUD. Also
-	 * checks for pause, class switch, etc.
-	 */
 	public void handleInput()
 	{
 		// Movement
@@ -149,11 +173,13 @@ public class PlayState extends GameState
 					break;
 			}
 		}
+		
+		if(Input.instance.keyPress(Input.ESCAPE))
+		{
+			gsm.setPaused(true);
+		}
 	}
 
-	/**
-	 * @return The current game time.
-	 */
 	public int getTime()
 	{
 		return time;

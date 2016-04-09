@@ -8,11 +8,9 @@ public class Room
 {
 	private int id;
 	private boolean[] doors;
-	
-	private Point2D[] friendlies;
-	private Point2D[] enemies;
-	
 	private boolean discovered;
+	
+	private Point2D[] enemies;
 	
 	public static int idCounter = 0;
 	
