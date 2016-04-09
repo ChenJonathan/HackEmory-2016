@@ -13,35 +13,28 @@ public class Floor
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 5;
 	
-	//Start is random
-	public static Floor randomFloor()
+	public Floor(boolean random)
 	{
-		Floor floor = new Floor();
-		floor.start = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
-		while(floor.end == null || floor.end.equals(floor.start))
+		if(random)
 		{
-			floor.end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
+			start = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
+			while(end == null || end.equals(start))
+			{
+				end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
+			}
 		}
-		return floor;
+		else
+		{
+			start = new Point2D.Double(3,3);
+		}
+		rooms = new Room[HEIGHT][WIDTH];
+		generateRooms();
 	}
 	
-	//Start is in the center(3,3)
-	public static Floor centerFloor()
-	{
-		Floor floor = new Floor();
-		floor.start = new Point2D.Double(3,3);
-		return floor;
-	}
 	//Start is set to the Point2D param
-	public static Floor specificFloor(Point2D start)
+	public Floor(Point2D start)
 	{
-		Floor floor = new Floor();
-		floor.start = start;
-		return floor;
-	}
-	
-	private Floor()
-	{
+		this.start = start;
 		rooms = new Room[HEIGHT][WIDTH];
 		generateRooms();
 	}
