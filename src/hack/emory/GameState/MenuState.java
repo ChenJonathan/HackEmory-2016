@@ -59,7 +59,12 @@ public class MenuState extends GameState {
 	@Override
 	public void handleInput() {
 		if (credits) {
-			// do credits
+			if (Input.instance.mouseLeftRelease()) { // onclick
+				if (Input.instance.mouseInRect(99, 936, 523 - 99, 1003 - 936)) {
+					gsm.setState(GameStateManager.MENU);
+				}
+				// do credits
+			}
 		} else { // in the menu
 			if (Input.instance.mouseLeftRelease()) { // onclick
 				if (Input.instance.mouseInRect(153, 822, 484 - 153, 888 - 822)) {

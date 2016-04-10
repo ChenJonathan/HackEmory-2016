@@ -27,8 +27,8 @@ public class Game extends JPanel implements Runnable
 	public static final int HEIGHT = 1080;
 	
 	// Display width and height - Change this
-	public static int resolutionWidth = 1366;
-	public static int resolutionHeight = 768;
+	public static int resolutionWidth = WIDTH;
+	public static int resolutionHeight = HEIGHT;
 
 	public static final int FPS = 60;
 

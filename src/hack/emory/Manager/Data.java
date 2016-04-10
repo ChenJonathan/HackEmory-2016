@@ -7,15 +7,15 @@ import java.awt.geom.Point2D;
  */
 public class Data
 {
-	private static Point2D start = null;
+	private static boolean minimap = false;;
 	
-	public static Point2D getStart()
+	public static boolean getMinimap()
 	{
-		return start;
+		return minimap;
 	}
 	
-	public static void setStart(Point2D end)
+	public static void setMinimap(boolean set)
 	{
-		start = end;
+		minimap = set;
 	}
 }

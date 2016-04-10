@@ -33,6 +33,8 @@ public class Content {
 	public static ImageData LEVEL_BACKGROUND = new ImageData("/images/menus/level_background.png", 1920, 1080);
 	public static ImageData MENU_BACKGROUND = new ImageData("/images/menus/menu_background.png", 1920, 1080);
 	public static ImageData CREDITS = new ImageData("/images/menus/credits.png", 1920, 1080);
+	public static ImageData PAUSED = new ImageData("/images/menus/pause_menu.png", 1920, 1080);
+
 
 	// Sprite
 	public static AnimationData MONSTER_MOVE_UP = new AnimationData("/images/sprites/monster/move_up.png", 128, 128, 4);
