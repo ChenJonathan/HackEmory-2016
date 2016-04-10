@@ -13,26 +13,15 @@ public class Floor
 	public static final int WIDTH = 5;
 	public static final int HEIGHT = 5;
 	
-	public Floor(boolean random)
+	public Floor()
 	{
-		if(random)
-		{
-			start = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
-			while(end == null || end.equals(start))
-			{
-				end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
-			}
-		}
-		else
-		{
-			start = new Point2D.Double(2, 2);
-			while(end == null || end.equals(start))
-			{
-				end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
-			}
-		}
+		start = new Point2D.Double(2, 2);
 		rooms = new Room[HEIGHT][WIDTH];
 		generateRooms();
+		while(end == null || rooms[(int) end.getX()][(int) end.getY()] == null || end.equals(start))
+		{
+			end = new Point2D.Double((int)(Math.random() * WIDTH), (int)(Math.random() * HEIGHT));
+		}
 	}
 	
 	//Start is set to the Point2D param
@@ -57,37 +46,6 @@ public class Floor
 	{
 		return end;
 	}
-	/*
-	public void generateRooms()
-	{
-		int currentX = (int) start.getX();
-		int currentY = (int) start.getY();
-		rooms[currentX][currentY] = new Room();
-		while((currentX != end.getX()) && (currentY != end.getY()))
-		{
-			Point2D[] neighbors = new Point2D[4];
-			neighbors[0] = new Point2D.Double(currentX, currentY - 1);
-			neighbors[1] = new Point2D.Double(currentX + 1, currentY);
-			neighbors[2] = new Point2D.Double(currentX, currentY + 1);
-			neighbors[3] = new Point2D.Double(currentX - 1, currentY);
-			double[] distance = new double[4];
-			distance[0] = Math.abs(neighbors[0].distance(end));
-			distance[1] = Math.abs(neighbors[1].distance(end));
-			distance[2] = Math.abs(neighbors[2].distance(end));
-			distance[3] = Math.abs(neighbors[3].distance(end));
-			int min = 0;
-			for(int i = 1; i < 3; i ++)
-			{
-				if(distance[min] > distance[i])
-				{
-					min = i;
-				}
-			}
-			rooms[(int)neighbors[min].getX()][(int)neighbors[min].getX()] = new Room();
-			currentX = (int)neighbors[min].getX();
-			currentY = (int)neighbors[min].getY();
-		}
-	}*/
 	
 	private void generateRooms()
 	{
@@ -96,8 +54,6 @@ public class Floor
 		ArrayList<Point2D> secondGen = new ArrayList<Point2D>();
 		ArrayList<Point2D> thirdGen = new ArrayList<Point2D>();
 		ArrayList<Point2D> fourthGen = new ArrayList<Point2D>();
-		ArrayList<Point2D> fifthGen = new ArrayList<Point2D>();
-		ArrayList<Point2D> sixthGen = new ArrayList<Point2D>();
 		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
 		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
 			firstGen.add(makeNorth(start));
@@ -211,16 +167,16 @@ public class Floor
 		int x = (int)curRoom.getX();
 		int y = (int)curRoom.getY();
 		boolean[] initDoors = new boolean[]{false, false, false, true};
-		if(rooms[x+1][y] == null)
+		if(rooms[x-1][y] == null)
 		{
-		rooms[x+1][y] = new Room(initDoors);
+			rooms[x-1][y] = new Room(initDoors);
 		}
 		else
 		{
-			rooms[x+1][y].addDoors(initDoors);
+			rooms[x-1][y].addDoors(initDoors);
 		}
 		rooms[x][y].addDoors(new boolean[]{false, true, false, false});
-		return new Point2D.Double(x+1,y);
+		return new Point2D.Double(x-1,y);
 	}
 	
 	private Point2D makeSouth(Point2D curRoom)
@@ -245,15 +201,15 @@ public class Floor
 		int x = (int)curRoom.getX();
 		int y = (int)curRoom.getY();
 		boolean[] initDoors = new boolean[]{false, true, false, false};
-		if(rooms[x-1][y] == null)
+		if(rooms[x+1][y] == null)
 		{
-			rooms[x-1][y] = new Room(initDoors);
+			rooms[x+1][y] = new Room(initDoors);
 		}
 		else
 		{
-			rooms[x-1][y].addDoors(initDoors);
+			rooms[x+1][y].addDoors(initDoors);
 		}
 		rooms[x][y].addDoors(new boolean[]{false, false, false, true});
-		return new Point2D.Double(x-1,y);
+		return new Point2D.Double(x+1,y);
 	}
 }

@@ -72,11 +72,19 @@ public class Player extends Entity
 				for(int i = 1; i < ps.getEntities().size(); i++)
 				{
 					Entity enemy = ps.getEntities().get(i);
+					
+					// Check for intersection
 					Area areaA = new Area(enemy.getHitbox());
 					areaA.intersect(new Area(weaponHitbox));
 					if(!areaA.isEmpty())
 					{
+						// Apply damage
 						enemy.setHealth(enemy.getHealth() - BASE_DAMAGE);
+						if(enemy.getHealth() == 0)
+						{
+							ps.incrementKills();
+							i--;
+						}
 					}
 				}
 			}

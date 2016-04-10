@@ -12,6 +12,7 @@ import hack.emory.Manager.GameStateManager;
 import hack.emory.Manager.Input;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 
 public class PlayState extends GameState
 {
+	private int kills;
 	private int time;
 	
 	int roomX;
@@ -51,7 +53,7 @@ public class PlayState extends GameState
 		super(gsm);
 
 		// Initialize stage
-		floor = new Floor(false);
+		floor = new Floor();
 		roomX = (int) floor.getStart().getX();
 		roomY = (int) floor.getStart().getY();
 		player = new Player(this, Game.WIDTH / 2, Game.HEIGHT / 2, Player.BASE_HEALTH);
@@ -60,7 +62,8 @@ public class PlayState extends GameState
 		minimap = Data.getMinimap();
 
 		// Initialize timer
-		time = -1;
+		kills = Data.getKills();
+		time = Data.getTime();
 	}
 
 	@Override
@@ -78,13 +81,17 @@ public class PlayState extends GameState
 		}
 		
 		// Update entities
-		for(Entity entity : entities)
+		for(int i = 0; i < entities.size(); i++)
 		{
+			Entity entity = entities.get(i);
 			entity.update();
 			
-			// Wall collisions
-			entity.setX(Math.min(Math.max(entity.getX(), entity.getWidth() / 2), Game.WIDTH - entity.getWidth() / 2));
-			entity.setY(Math.min(Math.max(entity.getY(), entity.getHeight() / 2), Game.HEIGHT - entity.getHeight() / 2));
+			if(entity.getHealth() > 0)
+			{
+				// Wall collisions
+				entity.setX(Math.min(Math.max(entity.getX(), entity.getWidth() / 2), Game.WIDTH - entity.getWidth() / 2));
+				entity.setY(Math.min(Math.max(entity.getY(), entity.getHeight() / 2), Game.HEIGHT - entity.getHeight() / 2));
+			}
 		}
 		
 		handleInput();
@@ -102,9 +109,17 @@ public class PlayState extends GameState
 		}
 		
 		// HUD
+		g.setFont(new Font("Garamond", Font.BOLD, 36));
+		g.setColor(Color.BLACK);
+		g.drawString("Level: " + Data.getLevel(), 22, 52);
+		g.drawString("Kills: " + kills, 22, 102);
+		g.drawString("Time: " + (time / 60), 22, 152);
+		g.setColor(Color.WHITE);
+		g.drawString("Level: " + Data.getLevel(), 20, 50);
+		g.drawString("Kills: " + kills, 20, 100);
+		g.drawString("Time: " + (time / 60), 20, 150);
 		if(minimap)
 		{
-			g.setColor(Color.WHITE);
 			g.drawRect(MAP_X - MAP_LENGTH / 2, MAP_Y - MAP_LENGTH / 2, MAP_LENGTH, MAP_LENGTH);
 			for(int x = -2; x < 3; x++)
 			{
@@ -246,7 +261,10 @@ public class PlayState extends GameState
 				}
 				if(new Point2D.Double(roomX, roomY).equals(floor.getEnd()))
 				{
-					data.setMinimap(minimap);
+					Data.setLevel(Data.getLevel() + 1);
+					Data.setKills(kills);
+					Data.setTime(time);
+					Data.setMinimap(minimap);
 					gsm.setState(GameStateManager.PLAY);
 				}
 			}
@@ -257,10 +275,10 @@ public class PlayState extends GameState
 			gsm.setPaused(true);
 		}
 	}
-
-	public int getTime()
+	
+	public void incrementKills()
 	{
-		return time;
+		kills++;
 	}
 	
 	public Player getPlayer()

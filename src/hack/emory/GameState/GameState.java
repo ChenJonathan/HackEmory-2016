@@ -1,6 +1,5 @@
 package hack.emory.GameState;
 
-import hack.emory.Manager.Data;
 import hack.emory.Manager.GameStateManager;
 
 import java.awt.Graphics2D;
@@ -10,7 +9,6 @@ import java.awt.Graphics2D;
  */
 public abstract class GameState
 {
-	protected Data data;
 	protected GameStateManager gsm;
 
 	/**
@@ -21,7 +19,6 @@ public abstract class GameState
 	public GameState(GameStateManager gsm)
 	{
 		this.gsm = gsm;
-		data = gsm.getData();
 	}
 
 	/**

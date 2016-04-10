@@ -18,7 +18,7 @@ public class Monster extends Entity
 	public static final int WIDTH = 128;
 	public static final int HEIGHT = 128;
 	
-	public static final double MAX_SPEED = 4;
+	public static final double MAX_SPEED = 3;
 	public static final double ACCELERATION = 2;
 	
 	public static final int BASE_HEALTH = 100;
