@@ -1,6 +1,10 @@
 package hack.emory.Entity;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 import hack.emory.GameState.PlayState;
 import hack.emory.Manager.Content;
@@ -28,6 +32,7 @@ public class Player extends Entity
 	public static final double ACCELERATION = 2;
 	
 	public static final int BASE_HEALTH = 100;
+	public static final int BASE_DAMAGE = 100;
 	
 	public Player(PlayState ps, double x, double y, int health)
 	{
@@ -40,51 +45,83 @@ public class Player extends Entity
 	public void update()
 	{
 		super.update();
-		if (velY == 0 && velX ==0) {
-			switch(direction)
+		
+		if(attacking())
+		{
+			if(animation.hasPlayedOnce())
 			{
-				case UP:
-					setAnimation(IDLE_UP, Content.getAnimation(Content.PLAYER_IDLE_UP), 10);
-					break;
-				case DOWN:
-					setAnimation(IDLE_DOWN, Content.getAnimation(Content.PLAYER_IDLE_DOWN), 10);
-					break;
-				case LEFT:
-					setAnimation(IDLE_LEFT, Content.getAnimation(Content.PLAYER_IDLE_LEFT), 10);
-					break;
-				case RIGHT:
-					setAnimation(IDLE_RIGHT, Content.getAnimation(Content.PLAYER_IDLE_RIGHT), 10);
-					break;
+				resetAnimation();
+				
+				Rectangle2D weaponHitbox = null;
+				switch(direction)
+				{
+					case UP:
+						weaponHitbox = new Rectangle2D.Double(x - width / 2, y - height, width, height);
+						break;
+					case DOWN:
+						weaponHitbox = new Rectangle2D.Double(x - width / 2, y, width, height);
+						break;
+					case LEFT:
+						weaponHitbox = new Rectangle2D.Double(x - width, y - height / 2, width, height);
+						break;
+					case RIGHT:
+						weaponHitbox = new Rectangle2D.Double(x, y - height / 2, width, height);
+						break;
+				}
+				
+				for(int i = 1; i < ps.getEntities().size(); i++)
+				{
+					Entity enemy = ps.getEntities().get(i);
+					Area areaA = new Area(enemy.getHitbox());
+					areaA.intersect(new Area(weaponHitbox));
+					if(!areaA.isEmpty())
+					{
+						enemy.setHealth(enemy.getHealth() - BASE_DAMAGE);
+					}
+				}
 			}
+		}
+		else if(velX == 0 && velY == 0)
+		{
+			resetAnimation();
 		}
 	}
 	
 	public void render(Graphics2D g)
 	{
-		g.drawImage(animation.getImage(), (int) getX() - getWidth() / 2, (int) getY() - getHeight() / 2, null);
+		g.drawImage(animation.getImage(), (int) x - width / 2, (int) y - height / 2, null);
+	}
+	
+	public Shape getHitbox()
+	{
+		return new Ellipse2D.Double((int) x - width / 2, (int) y - height / 2, width, height);
+	}
+	
+	public boolean attacking()
+	{
+		return currentAnimation >= ATTACK_UP && currentAnimation <= ATTACK_RIGHT;
 	}
 	
 	public void attack()
 	{
+		if(attacking())
+		{
+			return;
+		}
+		
 		switch(direction)
 		{
 			case UP:
-				setAnimation(MOVE_UP, Content.getAnimation(Content.PLAYER_MOVE_UP), 10);
+				setAnimation(ATTACK_UP, Content.getAnimation(Content.PLAYER_ATTACK_UP), 10);
 				break;
 			case DOWN:
-				velY = Math.min(velY + ACCELERATION, MAX_SPEED);
-				if(velX == 0)
-				{
-					setAnimation(MOVE_DOWN, Content.getAnimation(Content.PLAYER_MOVE_DOWN), 10);
-				}
+				setAnimation(ATTACK_DOWN, Content.getAnimation(Content.PLAYER_ATTACK_DOWN), 10);
 				break;
 			case LEFT:
-				velX = Math.max(velX - ACCELERATION, -MAX_SPEED);
-				setAnimation(MOVE_LEFT, Content.getAnimation(Content.PLAYER_MOVE_LEFT), 10);
+				setAnimation(ATTACK_LEFT, Content.getAnimation(Content.PLAYER_ATTACK_LEFT), 10);
 				break;
 			case RIGHT:
-				velX = Math.min(velX + ACCELERATION, MAX_SPEED);
-				setAnimation(MOVE_RIGHT, Content.getAnimation(Content.PLAYER_MOVE_RIGHT), 10);
+				setAnimation(ATTACK_RIGHT, Content.getAnimation(Content.PLAYER_ATTACK_RIGHT), 10);
 				break;
 		}
 	}
@@ -96,25 +133,88 @@ public class Player extends Entity
 		{
 			case UP:
 				velY = Math.max(velY - ACCELERATION, -MAX_SPEED);
-				if(velX == 0)
+				if(!attacking())
 				{
-					setAnimation(MOVE_UP, Content.getAnimation(Content.PLAYER_MOVE_UP), 10);
+					if(velX == 0)
+					{
+						setAnimation(MOVE_UP, Content.getAnimation(Content.PLAYER_MOVE_UP), 10);
+					}
+				}
+				else if(currentAnimation != ATTACK_UP)
+				{
+					int frame = animation.getFrame();
+					int count = animation.getCount();
+					setAnimation(ATTACK_UP, Content.getAnimation(Content.PLAYER_ATTACK_UP), 10);
+					animation.setFrame(frame);
+					animation.setCount(count);
 				}
 				break;
 			case DOWN:
 				velY = Math.min(velY + ACCELERATION, MAX_SPEED);
-				if(velX == 0)
+				if(!attacking())
 				{
-					setAnimation(MOVE_DOWN, Content.getAnimation(Content.PLAYER_MOVE_DOWN), 10);
+					if(velX == 0)
+					{
+						setAnimation(MOVE_DOWN, Content.getAnimation(Content.PLAYER_MOVE_DOWN), 10);
+					}
+				}
+				else if(currentAnimation != ATTACK_DOWN)
+				{
+					int frame = animation.getFrame();
+					int count = animation.getCount();
+					setAnimation(ATTACK_DOWN, Content.getAnimation(Content.PLAYER_ATTACK_DOWN), 10);
+					animation.setFrame(frame);
+					animation.setCount(count);
 				}
 				break;
 			case LEFT:
 				velX = Math.max(velX - ACCELERATION, -MAX_SPEED);
-				setAnimation(MOVE_LEFT, Content.getAnimation(Content.PLAYER_MOVE_LEFT), 10);
+				if(!attacking())
+				{
+					setAnimation(MOVE_LEFT, Content.getAnimation(Content.PLAYER_MOVE_LEFT), 10);
+				}
+				else if(currentAnimation != ATTACK_LEFT)
+				{
+					int frame = animation.getFrame();
+					int count = animation.getCount();
+					setAnimation(ATTACK_LEFT, Content.getAnimation(Content.PLAYER_ATTACK_LEFT), 10);
+					animation.setFrame(frame);
+					animation.setCount(count);
+				}
 				break;
 			case RIGHT:
 				velX = Math.min(velX + ACCELERATION, MAX_SPEED);
-				setAnimation(MOVE_RIGHT, Content.getAnimation(Content.PLAYER_MOVE_RIGHT), 10);
+				if(!attacking())
+				{
+					setAnimation(MOVE_RIGHT, Content.getAnimation(Content.PLAYER_MOVE_RIGHT), 10);
+				}
+				else if(currentAnimation != ATTACK_RIGHT)
+				{
+					int frame = animation.getFrame();
+					int count = animation.getCount();
+					setAnimation(ATTACK_RIGHT, Content.getAnimation(Content.PLAYER_ATTACK_RIGHT), 10);
+					animation.setFrame(frame);
+					animation.setCount(count);
+				}
+				break;
+		}
+	}
+	
+	private void resetAnimation()
+	{
+		switch(direction)
+		{
+			case UP:
+				setAnimation(IDLE_UP, Content.getAnimation(Content.PLAYER_IDLE_UP), 10);
+				break;
+			case DOWN:
+				setAnimation(IDLE_DOWN, Content.getAnimation(Content.PLAYER_IDLE_DOWN), 10);
+				break;
+			case LEFT:
+				setAnimation(IDLE_LEFT, Content.getAnimation(Content.PLAYER_IDLE_LEFT), 10);
+				break;
+			case RIGHT:
+				setAnimation(IDLE_RIGHT, Content.getAnimation(Content.PLAYER_IDLE_RIGHT), 10);
 				break;
 		}
 	}

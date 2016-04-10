@@ -1,6 +1,7 @@
 package hack.emory.Entity;
 
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.image.BufferedImage;
 
 import hack.emory.Manager.Animation;
@@ -8,6 +9,8 @@ import hack.emory.GameState.PlayState;
 
 public abstract class Entity
 {
+	protected PlayState ps;
+	
 	protected double x, y;
 	protected double prevX, prevY;
 	protected double velX, velY;
@@ -28,6 +31,8 @@ public abstract class Entity
 	
 	public Entity(PlayState ps, double x, double y, int width, int height, int health)
 	{
+		this.ps = ps;
+		
 		this.x = prevX = x;
 		this.y = prevY = y;
 		velX = velY = 0;
@@ -72,6 +77,8 @@ public abstract class Entity
 	
 	public abstract void render(Graphics2D g);
 	
+	public abstract Shape getHitbox();
+	
 	// Method used to change animation
 	protected void setAnimation(int count, BufferedImage[] images, int delay)
 	{
@@ -111,6 +118,20 @@ public abstract class Entity
 	public int getHeight()
 	{
 		return height;
+	}
+	
+	public int getHealth()
+	{
+		return health;
+	}
+	
+	public void setHealth(int health)
+	{
+		this.health = Math.min(Math.max(health, 0), maxHealth);
+		if(health == 0)
+		{
+			ps.getEntities().remove(this);
+		}
 	}
 	
 	public Direction getDirection()

@@ -35,6 +35,10 @@ public class Content {
 	public static ImageData CREDITS = new ImageData("/images/menus/credits.png", 1920, 1080);
 
 	// Sprite
+	public static AnimationData MONSTER_MOVE_UP = new AnimationData("/images/sprites/monster/move_up.png", 128, 128, 4);
+	public static AnimationData MONSTER_MOVE_DOWN = new AnimationData("/images/sprites/monster/move_down.png", 128, 128, 4);
+	public static AnimationData MONSTER_MOVE_LEFT = new AnimationData("/images/sprites/monster/move_left.png", 128, 128, 4);
+	public static AnimationData MONSTER_MOVE_RIGHT = new AnimationData("/images/sprites/monster/move_right.png", 128, 128, 4);
 	public static AnimationData PLAYER_ATTACK_UP = new AnimationData("/images/sprites/player/attack_up.png", 128, 128, 2);
 	public static AnimationData PLAYER_ATTACK_DOWN = new AnimationData("/images/sprites/player/attack_down.png", 128, 128, 2);
 	public static AnimationData PLAYER_ATTACK_LEFT = new AnimationData("/images/sprites/player/attack_left.png", 128, 128, 2);

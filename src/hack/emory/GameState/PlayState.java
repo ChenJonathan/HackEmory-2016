@@ -1,11 +1,13 @@
 package hack.emory.GameState;
 
 import hack.emory.Entity.Entity;
+import hack.emory.Entity.Monster;
 import hack.emory.Entity.Player;
 import hack.emory.Floor.Floor;
 import hack.emory.Floor.Room;
 import hack.emory.Main.Game;
 import hack.emory.Manager.Content;
+import hack.emory.Manager.Data;
 import hack.emory.Manager.GameStateManager;
 import hack.emory.Manager.Input;
 
@@ -56,10 +58,16 @@ public class PlayState extends GameState
 	@Override
 	public void update()
 	{
-		handleInput();
-
 		// Increment timer
 		time++;
+		
+		// Spawn entities
+		if(time % 500 == 0)
+		{
+			Monster monster = new Monster(this, Math.random() * (Game.WIDTH - Monster.WIDTH) + Monster.WIDTH / 2,
+					Math.random() * (Game.HEIGHT - Monster.HEIGHT) + Monster.HEIGHT / 2, Monster.BASE_HEALTH);
+			entities.add(monster);
+		}
 		
 		// Update entities
 		for(Entity entity : entities)
@@ -70,6 +78,8 @@ public class PlayState extends GameState
 			entity.setX(Math.min(Math.max(entity.getX(), entity.getWidth() / 2), Game.WIDTH - entity.getWidth() / 2));
 			entity.setY(Math.min(Math.max(entity.getY(), entity.getHeight() / 2), Game.HEIGHT - entity.getHeight() / 2));
 		}
+		
+		handleInput();
 	}
 
 	@Override
@@ -113,14 +123,6 @@ public class PlayState extends GameState
 	public void handleInput()
 	{
 		// Movement
-		if(Input.instance.keyDown(Input.A))
-		{
-			player.move(Entity.Direction.LEFT);
-		}
-		if(Input.instance.keyDown(Input.D))
-		{
-			player.move(Entity.Direction.RIGHT);
-		}
 		if(Input.instance.keyDown(Input.W))
 		{
 			player.move(Entity.Direction.UP);
@@ -129,10 +131,19 @@ public class PlayState extends GameState
 		{
 			player.move(Entity.Direction.DOWN);
 		}
+		if(Input.instance.keyDown(Input.A))
+		{
+			player.move(Entity.Direction.LEFT);
+		}
+		if(Input.instance.keyDown(Input.D))
+		{
+			player.move(Entity.Direction.RIGHT);
+		}
 		
 		// Action
 		if(Input.instance.keyPress(Input.SPACE))
 		{
+			boolean attack = true;
 			switch(player.getDirection())
 			{
 				case UP:
@@ -142,6 +153,7 @@ public class PlayState extends GameState
 							&& player.getY() == player.getHeight() / 2)
 					{
 						player.setY(Game.HEIGHT - player.getHeight() / 2);
+						attack = false;
 					}
 					break;
 				case DOWN:
@@ -151,6 +163,7 @@ public class PlayState extends GameState
 							&& player.getY() == Game.HEIGHT - player.getHeight() / 2)
 					{
 						player.setY(player.getHeight() / 2);
+						attack = false;
 					}
 					break;
 				case LEFT:
@@ -160,6 +173,7 @@ public class PlayState extends GameState
 							&& player.getX() == player.getWidth() / 2)
 					{
 						player.setX(Game.WIDTH - player.getWidth() / 2);
+						attack = false;
 					}
 					break;
 				case RIGHT:
@@ -169,8 +183,20 @@ public class PlayState extends GameState
 							&& player.getX() == Game.WIDTH - player.getWidth() / 2)
 					{
 						player.setX(player.getWidth() / 2);
+						attack = false;
 					}
 					break;
+			}
+			if(attack)
+			{
+				player.attack();
+			}
+			else
+			{
+				while(entities.size() > 1)
+				{
+					entities.remove(entities.size() - 1);
+				}
 			}
 		}
 		
@@ -183,5 +209,15 @@ public class PlayState extends GameState
 	public int getTime()
 	{
 		return time;
+	}
+	
+	public Player getPlayer()
+	{
+		return player;
+	}
+	
+	public ArrayList<Entity> getEntities()
+	{
+		return entities;
 	}
 }
