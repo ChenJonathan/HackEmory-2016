@@ -104,7 +104,27 @@ public class PlayState extends GameState
 								   ROOM_LENGTH, ROOM_LENGTH);
 						if(room.getDoor(Entity.Direction.UP))
 						{
-							// g.drawRect(Game.WIDTH / 2, Game.HEIGHT / 2, 10, MAP_LENGTH);
+							g.drawRect((MAP_X - x * ROOM_TOTAL_LENGTH) - 5, (MAP_Y - y * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2) - ROOM_PADDING, 10, ROOM_PADDING);
+							//g.drawLine((MAP_X + x * ROOM_TOTAL_LENGTH) - 5, (MAP_Y - y * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2), (MAP_X + x * ROOM_TOTAL_LENGTH) - 5, (MAP_Y - y * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2) - ROOM_PADDING);
+							//g.drawLine((MAP_X + x * ROOM_TOTAL_LENGTH) + 5, (MAP_Y - y * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2), (MAP_X + x * ROOM_TOTAL_LENGTH) + 5, (MAP_Y - y * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2) - ROOM_PADDING);
+						}
+						if(room.getDoor(Entity.Direction.DOWN))
+						{
+							g.drawRect((MAP_X - x * ROOM_TOTAL_LENGTH) - 5, (MAP_Y + y * ROOM_TOTAL_LENGTH) + (ROOM_LENGTH/2), 10, ROOM_PADDING);
+							//g.drawLine((MAP_X - x * ROOM_TOTAL_LENGTH) - 5, (MAP_Y + y * ROOM_TOTAL_LENGTH) + (ROOM_LENGTH/2), (MAP_X - x * ROOM_TOTAL_LENGTH) - 5, (MAP_Y + y * ROOM_TOTAL_LENGTH) + (ROOM_LENGTH/2) + ROOM_PADDING);
+							//g.drawLine((MAP_X + x * ROOM_TOTAL_LENGTH) + 5, (MAP_Y + y * ROOM_TOTAL_LENGTH) + (ROOM_LENGTH/2), (MAP_X + x * ROOM_TOTAL_LENGTH) + 5, (MAP_Y + y * ROOM_TOTAL_LENGTH) + (ROOM_LENGTH/2) + ROOM_PADDING);
+						}
+						if(room.getDoor(Entity.Direction.LEFT))
+						{
+							g.drawRect((MAP_X - x * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2) - ROOM_PADDING, (MAP_Y - y * ROOM_TOTAL_LENGTH) - 5, 10, ROOM_PADDING);
+							//g.drawLine((MAP_X - x * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2), (MAP_Y - y * ROOM_TOTAL_LENGTH) - 5, (MAP_X - x * ROOM_TOTAL_LENGTH)-(ROOM_LENGTH/2) - ROOM_PADDING, (MAP_Y - y * ROOM_TOTAL_LENGTH)- 5);
+							//g.drawLine((MAP_X - x * ROOM_TOTAL_LENGTH) - (ROOM_LENGTH/2),(MAP_Y + y * ROOM_TOTAL_LENGTH) + 5, (MAP_X - x * ROOM_TOTAL_LENGTH)-(ROOM_LENGTH/2) - ROOM_PADDING, (MAP_Y + y * ROOM_TOTAL_LENGTH) + 5);
+						}
+						if(room.getDoor(Entity.Direction.RIGHT))
+						{
+							g.drawRect((MAP_X + x * ROOM_TOTAL_LENGTH) + (ROOM_LENGTH/2), (MAP_Y - y * ROOM_TOTAL_LENGTH) - 5, 10, ROOM_PADDING); 
+							//g.drawLine((MAP_X + x * ROOM_TOTAL_LENGTH)+(ROOM_LENGTH/2), (MAP_Y - y * ROOM_TOTAL_LENGTH)- 5, (MAP_X + x * ROOM_TOTAL_LENGTH)+(ROOM_LENGTH/2) + ROOM_PADDING, (MAP_Y - y * ROOM_TOTAL_LENGTH)-5);
+							//g.drawLine((MAP_X + x * ROOM_TOTAL_LENGTH)+(ROOM_LENGTH/2), (MAP_Y + y * ROOM_TOTAL_LENGTH) + 5, (MAP_X + x * ROOM_TOTAL_LENGTH) +(ROOM_LENGTH/2) + ROOM_PADDING, (MAP_Y + y * ROOM_TOTAL_LENGTH) + 5);
 						}
 					}
 				}
