@@ -252,6 +252,8 @@ public class Floor
 											catch(Exception e){}
 											break;
 									}
+									int endRoom = (int)(Math.random() * (sixthGen.size()));
+									end = sixthGen.get(endRoom);
 //									for(int p = 0; p < sixthGen.size(); p++){
 //										int r6 = (int)(Math.random() * 4);
 //										switch(r6){
