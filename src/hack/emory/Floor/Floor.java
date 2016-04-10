@@ -93,167 +93,144 @@ public class Floor
 		ArrayList<Point2D> fourthGen = new ArrayList<Point2D>();
 		ArrayList<Point2D> fifthGen = new ArrayList<Point2D>();
 		ArrayList<Point2D> sixthGen = new ArrayList<Point2D>();
-		try{
+		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
+		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
 			firstGen.add(makeNorth(start));
 		}
-		catch(Exception e){}
-		try{
+		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
 			firstGen.add(makeEast(start));
 		}
-		catch(Exception e){}
-		try{
+		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
 			firstGen.add(makeSouth(start));
 		}
-		catch(Exception e){}
-		try{
+		if(start.getX() > 0 && start.getX() < 5 && start.getX() > 0 && start.getX() < 5){
 			firstGen.add(makeWest(start));
 		}
-		catch(Exception e){}
 		
 		for(int i = 0; i < firstGen.size(); i++){
 			int r1 = (int)(Math.random() * 4);
 			switch(r1){
 				case 0: 
-					try{
+					if(firstGen.get(i).getX() > 1 && firstGen.get(i).getX() < 4 && firstGen.get(i).getY() > 1 && firstGen.get(i).getY() < 4){
 						secondGen.add(makeNorth(firstGen.get(i)));
 					}
-					catch(Exception e){}
 					break;
 				case 1:
-					try{
+					if(firstGen.get(i).getX() > 1 && firstGen.get(i).getX() < 4 && firstGen.get(i).getY() > 1 && firstGen.get(i).getY() < 4){
 						secondGen.add(makeEast(firstGen.get(i)));
 					}
-					catch(Exception e){}
 					break;
 				case 2: 
-					try{
+					if(firstGen.get(i).getX() > 1 && firstGen.get(i).getX() < 4 && firstGen.get(i).getY() > 1 && firstGen.get(i).getY() < 4){
 						secondGen.add(makeSouth(firstGen.get(i)));
 					}
-					catch(Exception e){}
 					break;
 				case 3:
-					try{
+					if(firstGen.get(i).getX() > 1 && firstGen.get(i).getX() < 4 && firstGen.get(i).getY() > 1 && firstGen.get(i).getY() < 4){
 						secondGen.add(makeWest(firstGen.get(i)));
 					}
-					catch(Exception e){}
 					break;
 			}
 			for(int j = 0; j < secondGen.size(); j++){
 				int r2 = (int)(Math.random() * 4);
 				switch(r2){
 					case 0: 
-						try{
+						if(secondGen.get(j).getX() > 1 && secondGen.get(j).getX() < 4 && secondGen.get(j).getY() > 1 && secondGen.get(j).getY() < 4){
 							thirdGen.add(makeNorth(secondGen.get(j)));
 						}
-						catch(Exception e){}
 						break;
 					case 1: 
-						try{
+						if(secondGen.get(j).getX() > 1 && secondGen.get(j).getX() < 4 && secondGen.get(j).getY() > 1 && secondGen.get(j).getY() < 4){
 							thirdGen.add(makeEast(secondGen.get(j)));
 						}
-						catch(Exception e){}
 						break;
 					case 2: 
-						try{
+						if(secondGen.get(j).getX() > 1 && secondGen.get(j).getX() < 4 && secondGen.get(j).getY() > 1 && secondGen.get(j).getY() < 4){
 							thirdGen.add(makeSouth(secondGen.get(j)));
 						}
-						catch(Exception e){}
 						break;
 					case 3: 
-						try{
+						if(secondGen.get(j).getX() > 1 && secondGen.get(j).getX() < 4 && secondGen.get(j).getY() > 1 && secondGen.get(j).getY() < 4){
 							thirdGen.add(makeWest(secondGen.get(j)));
 						}
-						catch(Exception e){}
 						break;
 				}
 				for(int k = 0; k < thirdGen.size(); k++){
 					int r3 = (int)(Math.random() * 4);
 					switch(r3){
 						case 0: 
-							try{
+							if(thirdGen.get(k).getX() > 1 && thirdGen.get(k).getX() < 4 && thirdGen.get(k).getY() > 1 && thirdGen.get(k).getY() < 4){
 								fourthGen.add(makeNorth(thirdGen.get(k)));
 							}
-							catch(Exception e){}
 							break;
 						case 1: 
-							try{
+							if(thirdGen.get(k).getX() > 1 && thirdGen.get(k).getX() < 4 && thirdGen.get(k).getY() > 1 && thirdGen.get(k).getY() < 4){
 								fourthGen.add(makeEast(thirdGen.get(k)));
 							}
-							catch(Exception e){}
 							break;
 						case 2: 
-							try{
+							if(thirdGen.get(k).getX() > 1 && thirdGen.get(k).getX() < 4 && thirdGen.get(k).getY() > 1 && thirdGen.get(k).getY() < 4){
 								fourthGen.add(makeSouth(thirdGen.get(k)));
 							}
-							catch(Exception e){}
 							break;
 						case 3:
-							try{
+							if(thirdGen.get(k).getX() > 1 && thirdGen.get(k).getX() < 4 && thirdGen.get(k).getY() > 1 && thirdGen.get(k).getY() < 5){
 								fourthGen.add(makeWest(thirdGen.get(k)));
 							}
-							catch(Exception e){}
 							break;
 					}
-					for(int l = 0; l < fourthGen.size(); l++){
-						for(int m = 0; m < 2; m++){
-							int r4 = (int)(Math.random() * 4);
-							switch(r4){
-								case 0: 
-									try{
-										fifthGen.add(makeNorth(fourthGen.get(l+m)));
-									}
-									catch(Exception e){}
-									break;
-								case 1:
-									try{
-										fifthGen.add(makeEast(fourthGen.get(l+m)));
-									}
-									catch(Exception e){}
-									break;
-								case 2:
-									try{
-										fifthGen.add(makeSouth(fourthGen.get(l+m)));
-									}
-									catch(Exception e){}
-									break;
-								case 3:
-									try{
-										fifthGen.add(makeWest(fourthGen.get(l+m)));
-									}
-									catch(Exception e){}
-									break;
-							}
-							for(int n = 0; n < fifthGen.size(); n++){
-								for(int o = 0; o < 2; o++){
-									int r5 = (int)(Math.random() * 4);
-									switch(r5){
-										case 0:
-											try{
-												sixthGen.add(makeNorth(fifthGen.get(n+o)));
-											}
-											catch(Exception e){}
-											break;
-										case 1:
-											try{
-												sixthGen.add(makeEast(fifthGen.get(n+o)));
-											}
-											catch(Exception e){}
-											break;
-										case 2:
-											try{
-												sixthGen.add(makeSouth(fifthGen.get(n+o)));
-											}
-											catch(Exception e){}
-											break;
-										case 3:
-											try{
-												sixthGen.add(makeWest(fifthGen.get(n+o)));
-											}
-											catch(Exception e){}
-											break;
-									}
-									int endRoom = (int)(Math.random() * (sixthGen.size()));
-									end = sixthGen.get(endRoom);
+//					for(int l = 0; l < fourthGen.size(); l++){
+//						for(int m = 0; m < 2; m++){
+//							int r4 = (int)(Math.random() * 4);
+//							switch(r4){
+//								case 0: 
+//									if(fourthGen.get(l+m).getX() > 1 && fourthGen.get(l+m).getX() < 4 && fourthGen.get(l+m).getY() > 1 && fourthGen.get(l+m).getY() < 4){
+//										fifthGen.add(makeNorth(fourthGen.get(l+m)));
+//									}
+//									break;
+//								case 1:
+//									if(fourthGen.get(l+m).getX() > 1 && fourthGen.get(l+m).getX() < 4 && fourthGen.get(l+m).getY() > 1 && fourthGen.get(l+m).getY() < 4){
+//										fifthGen.add(makeEast(fourthGen.get(l+m)));
+//									}
+//									break;
+//								case 2:
+//									if(fourthGen.get(l+m).getX() > 1 && fourthGen.get(l+m).getX() < 4 && fourthGen.get(l+m).getY() > 1 && fourthGen.get(l+m).getY() < 4){
+//										fifthGen.add(makeSouth(fourthGen.get(l+m)));
+//									}
+//									break;
+//								case 3:
+//									if(fourthGen.get(l+m).getX() > 1 && fourthGen.get(l+m).getX() < 4 && fourthGen.get(l+m).getY() > 1 && fourthGen.get(l+m).getY() < 4){
+//										fifthGen.add(makeWest(fourthGen.get(l+m)));
+//									}
+//									break;
+//							}
+//							for(int n = 0; n < fifthGen.size(); n++){
+//								for(int o = 0; o < 2; o++){
+//									int r5 = (int)(Math.random() * 4);
+//									switch(r5){
+//										case 0:
+//											if(fifthGen.get(n+o).getX() > 0 && fifthGen.get(n+o).getX() < 4 && fifthGen.get(n+o).getY() > 0 && fifthGen.get(n+o).getY() < 4){
+//												sixthGen.add(makeNorth(fifthGen.get(n+o)));
+//											}
+//											break;
+//										case 1:
+//											if(fifthGen.get(n+o).getX() > 0 && fifthGen.get(n+o).getX() < 4 && fifthGen.get(n+o).getY() > 0 && fifthGen.get(n+o).getY() < 4){
+//												sixthGen.add(makeEast(fifthGen.get(n+o)));
+//											}
+//											break;
+//										case 2:
+//											if(fifthGen.get(n+o).getX() > 0 && fifthGen.get(n+o).getX() < 4 && fifthGen.get(n+o).getY() > 0 && fifthGen.get(n+o).getY() < 4){
+//												sixthGen.add(makeSouth(fifthGen.get(n+o)));
+//											}
+//											break;
+//										case 3:
+//											if(fifthGen.get(n+o).getX() > 0 && fifthGen.get(n+o).getX() < 4 && fifthGen.get(n+o).getY() > 0 && fifthGen.get(n+o).getY() < 4){
+//												sixthGen.add(makeWest(fifthGen.get(n+o)));
+//											}
+//											break;
+//									}
+//									int endRoom = (int)(Math.random() * (sixthGen.size()));
+//									end = sixthGen.get(endRoom);
 //									for(int p = 0; p < sixthGen.size(); p++){
 //										int r6 = (int)(Math.random() * 4);
 //										switch(r6){
@@ -283,14 +260,15 @@ public class Floor
 //												break;
 //										}
 //									}
-								}
-							}
-						}
-					}
+//								}
+//							}
+//						}
+//					}
 				}
 			}
 		}
 	}
+}
 	
 	public Point2D makeNorth(Point2D curRoom)
 	{
