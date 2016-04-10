@@ -25,7 +25,7 @@ public class Floor
 		}
 		else
 		{
-			start = new Point2D.Double(3,3);
+			start = new Point2D.Double(2,2);
 		}
 		rooms = new Room[HEIGHT][WIDTH];
 		generateRooms();
@@ -252,35 +252,35 @@ public class Floor
 											catch(Exception e){}
 											break;
 									}
-									for(int p = 0; p < sixthGen.size(); p++){
-										int r6 = (int)(Math.random() * 4);
-										switch(r6){
-											case 0:
-												try{
-													makeNorth(sixthGen.get(p));
-												}
-												catch(Exception e){}
-												break;
-											case 1:
-												try{
-													makeEast(sixthGen.get(p));
-												}
-												catch(Exception e){}
-												break;
-											case 2:
-												try{
-													makeSouth(sixthGen.get(p));
-												}
-												catch(Exception e){}
-												break;
-											case 3:
-												try{
-													makeWest(sixthGen.get(p));
-												}
-												catch(Exception e){}
-												break;
-										}
-									}
+//									for(int p = 0; p < sixthGen.size(); p++){
+//										int r6 = (int)(Math.random() * 4);
+//										switch(r6){
+//											case 0:
+//												try{
+//													makeNorth(sixthGen.get(p));
+//												}
+//												catch(Exception e){}
+//												break;
+//											case 1:
+//												try{
+//													makeEast(sixthGen.get(p));
+//												}
+//												catch(Exception e){}
+//												break;
+//											case 2:
+//												try{
+//													makeSouth(sixthGen.get(p));
+//												}
+//												catch(Exception e){}
+//												break;
+//											case 3:
+//												try{
+//													makeWest(sixthGen.get(p));
+//												}
+//												catch(Exception e){}
+//												break;
+//										}
+//									}
 								}
 							}
 						}
